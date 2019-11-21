@@ -2,7 +2,9 @@ package guru.springframework.services;
 
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
+import guru.springframework.domain.Notes;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.Test;
@@ -27,12 +29,22 @@ public class RecipeServiceTest {
     RecipeRepository recipeRepository;
 
     @Autowired
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @Autowired
     RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Transactional
     @Test
     public void testSaveOfDescription() throws Exception {
         // given
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Notes notes = new Notes();
+        notes.setId(1L);
+        notes.setRecipeNotes("test");
+        recipe.setNotes(notes);
+        recipeRepository.save(recipe);
         Iterable<Recipe> recipes = recipeRepository.findAll();
         Recipe testRecipe = recipes.iterator().next();
         RecipeCommand testRecipeCommand = recipeToRecipeCommand.convert(testRecipe);
