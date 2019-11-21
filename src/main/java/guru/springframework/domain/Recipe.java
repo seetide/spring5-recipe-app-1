@@ -1,7 +1,5 @@
 package guru.springframework.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +23,7 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
-
+    
     @Lob
     private String directions;
 

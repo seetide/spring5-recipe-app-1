@@ -8,18 +8,17 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NotesToNotesCommand implements Converter<Notes, NotesCommand> {
+public class NotesCommandToNotes implements Converter<NotesCommand, Notes> {
     @Override
     @Synchronized
     @Nullable
-    public NotesCommand convert(Notes source) {
+    public Notes convert(NotesCommand source) {
         if(source == null) return null;
 
-        final NotesCommand notesCommand = new NotesCommand();
+        final Notes notes = new Notes();
+        notes.setId(source.getId());
+        notes.setRecipeNotes(source.getRecipeNotes());
 
-        notesCommand.setId(source.getId());
-        notesCommand.setRecipeNotes(source.getRecipeNotes());
-
-        return notesCommand;
+        return notes;
     }
 }
