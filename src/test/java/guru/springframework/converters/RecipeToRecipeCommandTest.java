@@ -53,7 +53,7 @@ class RecipeToRecipeCommandTest {
         recipe.setDescription(DESCRIPTION);
         recipe.setDifficulty(DIFFICULTY);
         recipe.setDirections(DIRECTIONS);
-        recipe.setServings(SERVING);
+        recipe.setServing(SERVING);
         recipe.setSource(SOURCE);
         recipe.setUrl(URL);
 
