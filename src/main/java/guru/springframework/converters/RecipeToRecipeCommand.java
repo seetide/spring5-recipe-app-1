@@ -1,6 +1,7 @@
 package guru.springframework.converters;
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.domain.Category;
 import guru.springframework.domain.Recipe;
 import org.springframework.lang.Nullable;
 import lombok.Synchronized;
@@ -10,8 +11,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
 
-    public RecipeToRecipeCommand(CategoryToCategoryCommand categoryToCategoryCommand, IngredientToIngredientCommand ingredientToIngredientCommand, NotesToNotesCommand notesToNotesCommand) {
+    private final CategoryToCategoryCommand categoryConveter;
+    private final IngredientToIngredientCommand ingredientConverter;
+    private final NotesToNotesCommand notesConverter;
 
+    public RecipeToRecipeCommand(CategoryToCategoryCommand categoryConveter, IngredientToIngredientCommand ingredientConverter,
+                                 NotesToNotesCommand notesConverter) {
+        this.categoryConveter = categoryConveter;
+        this.ingredientConverter = ingredientConverter;
+        this.notesConverter = notesConverter;
     }
 
     @Synchronized
@@ -20,10 +28,28 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
     public RecipeCommand convert(Recipe source) {
         if(source == null)     return null;
 
-        final RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(source.getId());
-        recipeCommand.setDescription(source.getDescription());
+        final RecipeCommand command = new RecipeCommand();
+        command.setId(source.getId());
+        command.setCookTime(source.getCookTime());
+        command.setPrepTime(source.getPrepTime());
+        command.setDescription(source.getDescription());
+        command.setDifficulty(source.getDifficulty());
+        command.setDirections(source.getDirections());
+        command.setServing(source.getServing());
+        command.setSource(source.getSource());
+        command.setUrl(source.getUrl());
+        command.setNotes(notesConverter.convert(source.getNotes()));
 
-        return recipeCommand;
+        if (source.getCategories() != null && source.getCategories().size() > 0){
+            source.getCategories()
+                    .forEach((Category category) -> command.getCategories().add(categoryConveter.convert(category)));
+        }
+
+        if (source.getIngredients() != null && source.getIngredients().size() > 0){
+            source.getIngredients()
+                    .forEach(ingredient -> command.getIngredients().add(ingredientConverter.convert(ingredient)));
+        }
+
+        return command;
     }
 }
