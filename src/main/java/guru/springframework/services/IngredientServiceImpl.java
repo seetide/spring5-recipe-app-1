@@ -9,9 +9,11 @@ import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
+
 import java.util.Optional;
+
+
 
 @Slf4j
 @Service
@@ -32,27 +34,27 @@ public class IngredientServiceImpl implements IngredientService {
         this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
-
     @Override
     public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if(!recipeOptional.isPresent()){
             // todo impl error handling
             log.error("recipe id is not found. Id: " + recipeId);
         }
-
+        //System.out.println("recipeId is " + recipeId);
         Recipe recipe = recipeOptional.get();
 
-        Optional<IngredientCommand> ingredientOptional = recipe.getIngredients().stream()
+        Optional<IngredientCommand> ingredientCommandOptional = recipe.getIngredients().stream()
                 .filter(ingredient -> ingredient.getId().equals(ingredientId))
                 .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
 
-        if(!ingredientOptional.isPresent()){
+        if(!ingredientCommandOptional.isPresent()){
             // todo impl error handling
             log.error("Ingredient id not found: " + ingredientId);
         }
-        return ingredientOptional.get();
+        return ingredientCommandOptional.get();
     }
 
     @Override
