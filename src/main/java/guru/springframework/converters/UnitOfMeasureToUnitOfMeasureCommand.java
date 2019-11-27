@@ -15,12 +15,15 @@ public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeas
     @Nullable
     @Override
     public UnitOfMeasureCommand convert(UnitOfMeasure unitOfMeasure) {
-        if(unitOfMeasure == null) return null;
 
-        final UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
-        unitOfMeasureCommand.setId(unitOfMeasure.getId());
-        unitOfMeasureCommand.setDescription(unitOfMeasure.getDescription());
+        if(unitOfMeasure != null) {
+            final UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
+            unitOfMeasureCommand.setId(unitOfMeasure.getId());
+            unitOfMeasureCommand.setDescription(unitOfMeasure.getDescription());
 
-        return unitOfMeasureCommand;
+            return unitOfMeasureCommand;
+        }
+
+        return null;
     }
 }

@@ -7,6 +7,10 @@ import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+
+
+
+
 @Component
 public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 
@@ -14,7 +18,8 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
     private final NotesCommandToNotes notesCommandToNotes;
 
-    public RecipeCommandToRecipe(CategoryCommandToCategory categoryCommandToCategory, IngredientCommandToIngredient ingredientCommandToIngredient, NotesCommandToNotes notesCommandToNotes) {
+    public RecipeCommandToRecipe(CategoryCommandToCategory categoryCommandToCategory, IngredientCommandToIngredient ingredientCommandToIngredient,
+                                 NotesCommandToNotes notesCommandToNotes) {
         this.categoryCommandToCategory = categoryCommandToCategory;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
         this.notesCommandToNotes = notesCommandToNotes;
@@ -24,10 +29,11 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
     @Synchronized
     @Nullable
     public Recipe convert(RecipeCommand source) {
-        if(source == null) return null;
+        if(source == null) {
+            return null;
+        }
 
         final Recipe recipe = new  Recipe();
-
         recipe.setId(source.getId());
         recipe.setDescription(source.getDescription());
         recipe.setCookTime(source.getCookTime());

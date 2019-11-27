@@ -75,8 +75,7 @@ public class IngredientServiceImplTest {
 
         //when
         IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId(1L, 3L);
-        System.out.println("=========");
-        System.out.println(ingredientCommand.getRecipeId());
+
         // then
         assertEquals(Long.valueOf(3L), ingredientCommand.getId());
         System.out.println(ingredientCommand.getRecipeId());

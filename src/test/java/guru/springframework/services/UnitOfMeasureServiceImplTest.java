@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 
-public class UnitOfServiceImplTest {
+public class UnitOfMeasureServiceImplTest {
     UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
     UnitOfMeasureService service;
 

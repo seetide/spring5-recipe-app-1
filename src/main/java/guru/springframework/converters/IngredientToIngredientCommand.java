@@ -8,6 +8,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+
+
 @Component
 public class IngredientToIngredientCommand implements Converter<Ingredient, IngredientCommand> {
 
@@ -20,17 +22,22 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
     @Override
     @Nullable
     @Synchronized
-    public IngredientCommand convert(Ingredient source) {
-        if(source == null) return null;
+    public IngredientCommand convert(Ingredient ingredient) {
+        if(ingredient == null) {
+            return null;
+        }
 
         IngredientCommand ingredientCommand = new IngredientCommand();
 
-        ingredientCommand.setId(source.getId());
-        ingredientCommand.setRecipeId(source.getRecipe().getId());
-        ingredientCommand.setDescription(source.getDescription());
-        ingredientCommand.setAmount(source.getAmount());
+        ingredientCommand.setId(ingredient.getId());
+        if(ingredient.getRecipe() != null){  // prevent the recipe id null pointer error
+            ingredientCommand.setRecipeId(ingredient.getRecipe().getId());
+        }
 
-        ingredientCommand.setUnitOfMeasure(uomConverter.convert(source.getUnitOfMeasure()));
+        ingredientCommand.setDescription(ingredient.getDescription());
+        ingredientCommand.setAmount(ingredient.getAmount());
+
+        ingredientCommand.setUnitOfMeasure(uomConverter.convert(ingredient.getUnitOfMeasure()));
 
         return ingredientCommand;
     }
