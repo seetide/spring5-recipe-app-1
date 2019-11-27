@@ -60,7 +60,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
-        Optional<Recipe> recipeOptional = recipeRepository.findById(command.getId());
+        Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
         if(!recipeOptional.isPresent()){
 
@@ -102,7 +102,7 @@ public class IngredientServiceImpl implements IngredientService {
                 savedIngredientOptional = savedRecipe.getIngredients().stream()
                         .filter(recipeIngredient -> recipeIngredient.getDescription().equals(command.getDescription()))
                         .filter(recipeIngredient -> recipeIngredient.getAmount().equals(command.getAmount()))
-                        .filter(recipeIngredient -> recipeIngredient.getUnitOfMeasure().equals(command.getUnitOfMeasure().getId()))
+                        .filter(recipeIngredient -> recipeIngredient.getUnitOfMeasure().getId().equals(command.getUnitOfMeasure().getId()))
                         .findFirst();
             }
 

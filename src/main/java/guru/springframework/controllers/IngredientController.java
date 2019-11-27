@@ -79,7 +79,7 @@ public class IngredientController {
     }
 
     @PostMapping("recipe/{recipeId}/ingredient") // for not clear reason, I have to use this without RequestMapping.
-    public String saveUpdate(@ModelAttribute IngredientCommand command) {
+    public String saveOrUpdate(@ModelAttribute IngredientCommand command) {
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
 
         log.debug("saved recipe id: " + savedCommand.getRecipeId());
